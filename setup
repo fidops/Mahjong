@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# install taskctl https://github.com/taskctl/taskctl#install
+curl -sL https://raw.githubusercontent.com/taskctl/taskctl/master/install.sh | sh
