@@ -1,0 +1,2 @@
+class MahjongJansou < ApplicationRecord
+end
