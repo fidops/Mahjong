@@ -18,6 +18,8 @@
 #
 class Match < ApplicationRecord
   has_many :games, dependent: :destroy
+  has_many :match_members, dependent: :destroy
+  has_many :members, through: :match_members
   belongs_to :jansou
 
   validates :name, presence: true

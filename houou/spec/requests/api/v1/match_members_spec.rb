@@ -16,7 +16,7 @@ RSpec.describe "Api::V1::MatchMembers", type: :request do
     subject { get api_v1_match_members_url(match_id), headers: }
 
     context 'Correct - 200' do
-      context 'when no members exist' do
+      context 'when no members exist on match' do
         it 'returns empty array response' do
           subject
 
@@ -27,7 +27,7 @@ RSpec.describe "Api::V1::MatchMembers", type: :request do
         it { is_expected_response.to have_http_status(200) }
       end
 
-      context 'when 10 members exist' do
+      context 'when 10 members exist on match' do
         let(:members_count) { 10 }
         let!(:members) { create_list(:member, members_count, match:) }
 
