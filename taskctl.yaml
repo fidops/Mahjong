@@ -1,5 +1,7 @@
 pipelines:
   setup:
+    - task: add-remote-houou
+    - task: add-remote-yakuman
     - task: .env
     - task: build
     - task: dbreset
@@ -24,6 +26,14 @@ contexts:
     down: docker compose down postgres
 
 tasks:
+  add-remote-houou:
+    description: "Add git remote for fidops/houou"
+    command: git remote add houou git@github.com:fidops/houou.git
+
+  add-remote-yakuman:
+    description: "Add git remote for fidops/yakuman"
+    command: git remote add yakuman git@github.com:fidops/yakuman.git
+
   .env:
     description: "Create .env from .env.sample"
     command: cp .env.sample .env
@@ -46,3 +56,17 @@ tasks:
     description: "Repeatable DB initialization for development"
     context: houou-with-postgres
     command: bundle exec rails db:reset
+
+  push-to-houou:
+    description: "Push to fidops/houou"
+    command: git subtree push --prefix=houou houou {{index .ArgsList 0}}
+
+  push-to-yakuman:
+    description: "Push to fidops/yakuman"
+    command: git subtree push --prefix=yakuman yakuman {{index .ArgsList 0}}
+
+  pull:
+    description: "Pull subtree updates"
+    command:
+      - git subtree pull --prefix=houou houou main
+      - git subtree pull --prefix=yakuman yakuman main
