@@ -29,15 +29,9 @@ tasks:
     description: "Add git remote for fidops/houou"
     command: git remote add houou git@github.com:fidops/houou.git
 
-  add-remote-houou-http:
-    command: git remote add houou https://github.com/fidops/houou.git
-
   add-remote-yakuman:
     description: "Add git remote for fidops/yakuman"
     command: git remote add yakuman git@github.com:fidops/yakuman.git
-
-  add-remote-yakuman-http:
-    command: git remote add yakuman https://github.com/fidops/yakuman.git
 
   .env:
     description: "Create .env from .env.sample"
