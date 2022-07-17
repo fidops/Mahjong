@@ -4,7 +4,7 @@ services:
   postgres:
     image: postgres:latest
     volumes:
-      - db:/var/postgresql/data
+      - db:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -25,6 +25,7 @@ services:
     environment:
       DATABASE_URL: ${DATABASE_URL}
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: true
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
     ports:
       - 3000:3000
     stdin_open: true
