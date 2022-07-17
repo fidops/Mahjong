@@ -19,7 +19,8 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'minitest-reporters'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
+  gem 'annotate'
+  gem 'rspec-rails', '6.0.0.rc1'
 end

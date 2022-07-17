@@ -1,2 +1,0 @@
-class MahjongJansou < ApplicationRecord
-end

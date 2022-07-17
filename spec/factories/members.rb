@@ -8,9 +8,10 @@
 #  updated_at :datetime         not null
 #  discord_id :string
 #
-class Member < ApplicationRecord
-  self.implicit_order_column = 'created_at'
-
-  validates :name, presence: true
-  # validates :discord_id, numericality: { only_integer: true }, allow_nil: true
+FactoryBot.define do
+  factory :member do
+    id { Faker::Internet.uuid }
+    name { Faker::Name.name }
+    discord_id { Faker::Number.number(digits: 18).to_s }
+  end
 end

@@ -17,7 +17,7 @@ class Api::V1::MembersController < ApplicationController
     @member = Member.new(member_params)
 
     if @member.save
-      render :show, status: :created, location: @member
+      render :show, status: :created, location: api_v1_member_url(@member)
     else
       render json: @member.errors, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class Api::V1::MembersController < ApplicationController
   # PATCH/PUT /members/1.json
   def update
     if @member.update(member_params)
-      render :show, status: :ok, location: @member
+      render :show, status: :ok, location: api_v1_member_url(@member)
     else
       render json: @member.errors, status: :unprocessable_entity
     end

@@ -1,0 +1,41 @@
+name: Run RSpec
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+
+    services:
+      pg:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Create .env
+        run: cp .env.sample .env
+
+      - name: Assert migration successful for test
+        run: RAILS_ENV=test bundle exec rails db:create db:migrate
+
+      - name: Run RSpec
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: RAILS_ENV=test bundle exec rspec
