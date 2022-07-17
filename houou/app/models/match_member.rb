@@ -19,6 +19,8 @@
 #  fk_rails_...  (member_id => members.id)
 #
 class MatchMember < ApplicationRecord
+  self.implicit_order_column = 'created_at'
+
   belongs_to :match
   belongs_to :member
 end

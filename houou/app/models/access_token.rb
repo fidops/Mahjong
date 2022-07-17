@@ -22,6 +22,8 @@
 require 'jwt'
 
 class AccessToken < ApplicationRecord
+  self.implicit_order_column = 'created_at'
+
   has_secure_token :token, length: 64
   has_secure_token :auth_token, length: 64
 

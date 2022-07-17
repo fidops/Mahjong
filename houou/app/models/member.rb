@@ -10,6 +10,7 @@
 #
 class Member < ApplicationRecord
   self.implicit_order_column = 'created_at'
+
   has_many :match_members, dependent: :destroy
   has_many :matches, through: :match_members
 
