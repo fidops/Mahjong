@@ -17,19 +17,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@master
+        with:
+          token: ${{ secrets.BOT_PAT }}
 
       - name: Install taskctl
         run: ./setup
 
-      - name: Add git remote
-        run: bin/taskctl add-remote-houou add-remote-yakuman
+      - name: Add git remote HTTP
+        run: |
+          git remote add houou https://github.com/fidops/houou.git
+          git remote add yakuman https://github.com/fidops/yakuman.git
 
       - name: Push to houou
         run: bin/taskctl push-to-houou -- main
-        with:
-          token: ${{ secrets.BOT_PAT }}
 
       - name: Push to yakuman
         run: bin/taskctl push-to-yakuman -- main
-        with:
-          token: ${{ secrets.BOT_PAT }}
