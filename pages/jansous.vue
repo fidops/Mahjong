@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { MahjongJansou } from '~/types/IMahjongJansou'
+import { Jansou } from '~/types/IJansou'
 
 export default Vue.extend({
     name: 'MahjongMatch',
@@ -18,7 +18,7 @@ export default Vue.extend({
             { path: '/', breadcrumbName: 'Home' },
             { path: '/jansous', breadcrumbName: 'jansous' },
         ],
-        jansous: [] as MahjongJansou[],
+        jansous: [] as Jansou[],
         columns: [
             {
                 title: 'Name',
@@ -40,7 +40,7 @@ export default Vue.extend({
     }),
     async fetch() {
         try {
-            this.jansous = await this.$axios.$get('/mahjong_jansous')
+            this.jansous = await this.$axios.$get('/jansous')
         } catch (_err: any) {
             return
         }
