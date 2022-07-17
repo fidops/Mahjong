@@ -12,6 +12,11 @@ contexts:
       bin: docker
       args: ["compose", "run", "--rm", "houou"]
 
+  houou-test:
+    executable:
+      bin: docker
+      args: ["compose", "run", "-e", "RAILS_ENV=test", "--rm", "houou"]
+
   yakuman:
     executable:
       bin: docker
@@ -59,6 +64,12 @@ tasks:
     description: "Run rails db:migrate"
     context: houou-with-postgres
     command: bundle exec rails db:migrate
+
+  rspec:
+    description: "Run RSpec"
+    context: houou-test
+    before: bundle exec rails db:setup
+    command: bundle exec rspec
 
   push-to-houou:
     description: "Push to fidops/houou"

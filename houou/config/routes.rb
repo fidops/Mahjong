@@ -10,10 +10,11 @@ Rails.application.routes.draw do
       resources :administrators
       resources :jansous
       resources :games, only: %i(index update destroy)
+      resources :members
       resources :matches do
         resources :games, only: %i(index create), controller: :match_games
+        resources :members, only: %i(index create), controller: :match_members
       end
-      resources :members
     end
   end
 end

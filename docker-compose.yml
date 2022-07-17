@@ -26,6 +26,7 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: true
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      RAILS_ENV: development
     ports:
       - 3000:3000
     stdin_open: true
