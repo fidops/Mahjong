@@ -5,7 +5,6 @@ pipelines:
     - task: .env
     - task: build
     - task: dbreset
-      depends_on: pg
 
 contexts:
   houou:
