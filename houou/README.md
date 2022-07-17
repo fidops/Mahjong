@@ -24,7 +24,69 @@ $ make down
 
 ## Endpoints
 
-:construction: WIP :construction:
+:construction: wip :construction:
+
+### Auth
+
+```
+   api_v1_auth_create POST   /api/v1/auth/create
+  api_v1_auth_destroy DELETE /api/v1/auth/destroy
+```
+
+### Administrators
+
+```
+api_v1_administrators GET    /api/v1/administrators
+                      POST   /api/v1/administrators
+ api_v1_administrator GET    /api/v1/administrators/:id
+                      PATCH  /api/v1/administrators/:id
+                      PUT    /api/v1/administrators/:id
+                      DELETE /api/v1/administrators/:id
+```
+
+### Jansous
+
+```
+       api_v1_jansous GET    /api/v1/jansous
+                      POST   /api/v1/jansous
+        api_v1_jansou GET    /api/v1/jansous/:id
+                      PATCH  /api/v1/jansous/:id
+                      PUT    /api/v1/jansous/:id
+                      DELETE /api/v1/jansous/:id
+```
+
+### Games & Match with Games
+
+```
+         api_v1_games GET    /api/v1/games
+          api_v1_game PATCH  /api/v1/games/:id
+                      PUT    /api/v1/games/:id
+                      DELETE /api/v1/games/:id
+   api_v1_match_games GET    /api/v1/matches/:match_id/games
+                      POST   /api/v1/matches/:match_id/games
+```
+
+### Matches
+
+```
+       api_v1_matches GET    /api/v1/matches
+                      POST   /api/v1/matches
+         api_v1_match GET    /api/v1/matches/:id
+                      PATCH  /api/v1/matches/:id
+                      PUT    /api/v1/matches/:id
+                      DELETE /api/v1/matches/:id
+```
+
+### Members
+
+```
+       api_v1_members GET    /api/v1/members
+                      POST   /api/v1/members
+        api_v1_member GET    /api/v1/members/:id
+                      PATCH  /api/v1/members/:id
+                      PUT    /api/v1/members/:id
+                      DELETE /api/v1/members/:id
+```
 
 ## Contribute
 

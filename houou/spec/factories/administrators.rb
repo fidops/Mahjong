@@ -8,11 +8,11 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
-class Administrator < ApplicationRecord
-  has_secure_password
-
-  has_one :access_token, dependent: :destroy
-
-  validates :password, length: { minimum: 8 }
-  validates :userid, presence: true
+FactoryBot.define do
+  factory :administrator do
+    userid { Faker::Internet.username }
+    password = Faker::Internet.password
+    password { password }
+    password_confirmation { password }
+  end
 end

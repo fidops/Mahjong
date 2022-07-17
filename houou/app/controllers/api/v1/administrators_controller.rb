@@ -17,7 +17,7 @@ class Api::V1::AdministratorsController < ApplicationController
     @administrator = Administrator.new(administrator_params)
 
     if @administrator.save
-      render :show, status: :created, location: @administrator
+      render :show, status: :created, location: api_v1_administrator_url(@administrator)
     else
       render json: @administrator.errors, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class Api::V1::AdministratorsController < ApplicationController
   # PATCH/PUT /administrators/1.json
   def update
     if @administrator.update(administrator_params)
-      render :show, status: :ok, location: @administrator
+      render :show, status: :ok, location: api_v1_administrator_url(@administrator)
     else
       render json: @administrator.errors, status: :unprocessable_entity
     end
@@ -48,6 +48,6 @@ class Api::V1::AdministratorsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def administrator_params
-    params.require(:administrator).permit(:userid, :password, :password_confirmation)
+    params.permit(:userid, :password, :password_confirmation)
   end
 end

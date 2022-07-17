@@ -36,3 +36,7 @@ up: pg
 .PHONY: down
 down:
 	docker stop pg-houou
+
+.PHONY: test
+test:
+	RAILS_ENV=test bundle exec rspec
