@@ -10,6 +10,11 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - 5432:5432
+    healthcheck:
+      test: ["sh -c", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   houou:
     build: ./houou
@@ -19,6 +24,7 @@ services:
       - bundle_gems:/usr/local/bundle
     environment:
       DATABASE_URL: ${DATABASE_URL}
+      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: true
     ports:
       - 3000:3000
     stdin_open: true
@@ -29,11 +35,15 @@ services:
     image: fidops/yakuman:dev
     volumes:
       - ./yakuman:/app
+      - node_modules:/app/node_modules
     environment:
       API_URL: ${API_URL}
     ports:
       - 3001:3001
+    stdin_open: true
+    tty: true
 
 volumes:
   db:
   bundle_gems:
+  node_modules:

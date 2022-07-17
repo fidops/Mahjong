@@ -1,32 +1,48 @@
-# This is an example of taskctl tasks configuration file.
-# More information at https://github.com/taskctl/taskctl
 pipelines:
-  houou-setup:
+  setup:
     - task: .env
-    - task: bundle
-    - task: pg
+    - task: build
     - task: dbreset
       depends_on: pg
 
+contexts:
+  houou:
+    executable:
+      bin: docker
+      args: ["compose", "run", "--rm", "houou"]
+
+  yakuman:
+    executable:
+      bin: docker
+      args: ["compose", "run", "--rm", "yakuman"]
+
+  houou-with-postgres:
+    executable:
+      bin: docker
+      args: ["compose", "run", "--rm", "houou"]
+    up: docker compose up -d postgres
+    down: docker compose down postgres
+
 tasks:
   .env:
-    dir: houou
-    description: "create .env on houou"
+    description: "Create .env from .env.sample"
     command: cp .env.sample .env
 
-  wait-for-db:
-    dir: houou
-    description: "waiting postgres db connection is up"
-    command: ./scripts/wait-for-it.sh localhost:5432 -- echo "db ready"
+  build:
+    description: "Build develop image for docker compose"
+    command: docker compose build
 
   bundle:
-    dir: houou
+    description: "Run bundle install manually"
+    context: houou
     command: bundle install
 
+  yarn:
+    description: "Run yarn manually"
+    context: yakuman
+    command: yarn
+
   dbreset:
-    dir: houou
+    description: "Repeatable DB initialization for development"
+    context: houou-with-postgres
     command: bundle exec rails db:reset
-    env:
-      RAILS_ENV: develop
-    variations:
-      - RAILS_ENV: test
