@@ -1,0 +1,32 @@
+# This is an example of taskctl tasks configuration file.
+# More information at https://github.com/taskctl/taskctl
+pipelines:
+  houou-setup:
+    - task: .env
+    - task: bundle
+    - task: pg
+    - task: dbreset
+      depends_on: pg
+
+tasks:
+  .env:
+    dir: houou
+    description: "create .env on houou"
+    command: cp .env.sample .env
+
+  wait-for-db:
+    dir: houou
+    description: "waiting postgres db connection is up"
+    command: ./scripts/wait-for-it.sh localhost:5432 -- echo "db ready"
+
+  bundle:
+    dir: houou
+    command: bundle install
+
+  dbreset:
+    dir: houou
+    command: bundle exec rails db:reset
+    env:
+      RAILS_ENV: develop
+    variations:
+      - RAILS_ENV: test
