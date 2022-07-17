@@ -21,16 +21,9 @@ jobs:
           token: ${{ secrets.BOT_PAT }}
           fetch-depth: 0
 
-      - name: Install taskctl
-        run: ./setup
-
       - name: Add git remote HTTP
         run: |
-          git remote add houou https://github.com/fidops/houou.git
-          git remote add yakuman https://github.com/fidops/yakuman.git
+          git remote add ${{ matrix.path }} https://github.com/fidops/${{ matrix.path }}.git
 
-      - name: Push to houou
-        run: bin/taskctl push-to-houou -- main
-
-      - name: Push to yakuman
-        run: bin/taskctl push-to-yakuman -- main
+      - name: Push to subtree/main
+        run: git subtree push --prefix=${{ matrix.path }} ${{ matrix.path }} main
