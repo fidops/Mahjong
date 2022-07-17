@@ -37,7 +37,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { MahjongGame } from '~/types/IMahjongGame'
+import { Game } from '~/types/IGame'
 import { Member } from '~/types/IMember'
 
 interface ColumnObject {
@@ -63,7 +63,7 @@ export default Vue.extend({
             { path: '/', breadcrumbName: 'Home' },
             { path: '/games', breadcrumbName: 'games' },
         ],
-        games: [] as MahjongGame[],
+        games: [] as Game[],
         members: [] as Member[],
         tableFormattedGames: [] as UuidWithScore[],
         columns: [] as ColumnObject[],
@@ -74,7 +74,7 @@ export default Vue.extend({
     }),
     async fetch() {
         try {
-            this.games = await this.$axios.$get('/mahjong_games')
+            this.games = await this.$axios.$get('/games')
             this.members = await this.$axios.$get('/members')
         } catch (_err: any) {
             return
