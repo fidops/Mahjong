@@ -67,5 +67,5 @@ tasks:
   pull:
     description: "Pull subtree updates"
     command:
-      - git subtree pull --prefix=houou houou main
-      - git subtree pull --prefix=yakuman yakuman main
+      - git subtree pull --prefix=houou --squash houou main
+      - git subtree pull --prefix=yakuman --squash yakuman main
