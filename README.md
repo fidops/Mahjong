@@ -24,8 +24,6 @@ $ make down
 
 ## Endpoints
 
-:construction: wip :construction:
-
 ### Auth
 
 ```
