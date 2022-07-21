@@ -9,6 +9,8 @@
 #  updated_at      :datetime         not null
 #
 class Administrator < ApplicationRecord
+  self.implicit_order_column = 'created_at'
+
   has_secure_password
 
   has_one :access_token, dependent: :destroy

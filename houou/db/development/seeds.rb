@@ -16,6 +16,7 @@ ActiveRecord::Base.transaction do
   j2 = Jansou.create!(name: 'Member2 sou')
 
   match = Match.create!(name: '5/6', jansou: j1)
+  match.members = [m1, m2, m3, m4, m5]
   Game.create!(east: m1, south: m3, west: m5, north: m4, east_score: 36_600, south_score: 2600,
                       west_score: 42_700, north_score: 18_900, match: match)
   Game.create!(east: m1, south: m3, west: m4, north: m2, east_score: 18_200, south_score: 10_300,
@@ -28,6 +29,7 @@ ActiveRecord::Base.transaction do
                       west_score: 10_000, north_score: 21_500, match: match)
 
   match = Match.create(name: '5/21', jansou: j1)
+  match.members = [m1, m3, m4, m5, m6]
   Game.create!(east: m1, south: m5, west: m3, north: m4, east_score: 14_700, south_score: 37_900,
                       west_score: 32_700, north_score: 14_700, match: match)
   Game.create!(east: m1, south: m3, west: m6, north: m4, east_score: 11_500, south_score: 28_800,
@@ -40,6 +42,7 @@ ActiveRecord::Base.transaction do
                       west_score: 26_300, north_score: 43_400, match: match)
 
   match = Match.create(name: '5/28', jansou: j2)
+  match.members = [m1, m3, m4, m5]
   Game.create!(east: m3, south: m5, west: m1, north: nil, east_score: 37_000, south_score: 44_000,
                       west_score: 24_000, north_score: nil, match: match)
   Game.create!(east: m3, south: m5, west: m1, north: m4, east_score: 31_900, south_score: 36_100,
@@ -48,10 +51,12 @@ ActiveRecord::Base.transaction do
                       west_score: 17_000, north_score: 48_200, match: match)
 
   match = Match.create(name: '5/31', jansou: j2)
+  match.members = [m3, m4, m5, m6]
   Game.create!(east: m3, south: m5, west: m4, north: m6, east_score: 32_900, south_score: 32_700,
                       west_score: 21_000, north_score: 5300, match: match)
 
   match = Match.create(name: '6/4', jansou: j1)
+  match.members = [m1, m3, m5]
   Game.create!(east: m3, south: m5, west: m1, north: nil, east_score: 43_000, south_score: 26_000,
                       west_score: 36_000, north_score: nil, match: match)
   Game.create!(east: m3, south: m5, west: m1, north: nil, east_score: 93_000, south_score: 3000,

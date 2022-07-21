@@ -17,7 +17,11 @@
 #  fk_rails_...  (jansou_id => jansous.id)
 #
 class Match < ApplicationRecord
+  self.implicit_order_column = 'created_at'
+
   has_many :games, dependent: :destroy
+  has_many :match_members, dependent: :destroy
+  has_many :members, through: :match_members
   belongs_to :jansou
 
   validates :name, presence: true
