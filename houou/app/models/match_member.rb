@@ -21,6 +21,8 @@
 class MatchMember < ApplicationRecord
   self.implicit_order_column = 'created_at'
 
+  validates :member, uniqueness: { scope: :match }
+
   belongs_to :match
   belongs_to :member
 end

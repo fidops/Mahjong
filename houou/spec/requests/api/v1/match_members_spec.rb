@@ -101,5 +101,15 @@ RSpec.describe "Api::V1::MatchMembers", type: :request do
         it { is_expected_response.to have_http_status(404) }
       end
     end
+
+    context 'Illegal - 422' do
+      context 'when specified member already exists' do
+        before do
+          match.members << member
+        end
+
+        it { is_expected_response.to have_http_status(422) }
+      end
+    end
   end
 end
