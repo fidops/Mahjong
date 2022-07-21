@@ -20,5 +20,15 @@ FactoryBot.define do
   factory :match do
     name { Faker::Restaurant.name }
     jansou { association :jansou }
+
+    factory :match_with_members do
+      transient do
+        members_count { 4 }
+      end
+
+      after(:create) do |match, evaluator|
+        match.members << create_list(:member, evaluator.members_count)
+      end
+    end
   end
 end

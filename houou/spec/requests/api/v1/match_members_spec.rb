@@ -29,7 +29,8 @@ RSpec.describe "Api::V1::MatchMembers", type: :request do
 
       context 'when 10 members exist on match' do
         let(:members_count) { 10 }
-        let!(:members) { create_list(:member, members_count, match:) }
+        let!(:match) { create(:match_with_members, members_count:) }
+        let(:members) { match.members }
 
         it 'returns response that array of members' do
           subject
@@ -42,6 +43,7 @@ RSpec.describe "Api::V1::MatchMembers", type: :request do
         it { is_expected_response.to have_http_status(200) }
       end
     end
+
     context 'Illegal - 404' do
       context 'when specified match does not exist' do
         let(:match_id) { 'invalid' }
@@ -66,7 +68,6 @@ RSpec.describe "Api::V1::MatchMembers", type: :request do
     let(:match_id) { match.id }
     let(:params) do
       {
-        match_id:,
         member_id:
       }.to_json
     end
@@ -88,13 +89,13 @@ RSpec.describe "Api::V1::MatchMembers", type: :request do
     end
 
     context 'Illegal - 404' do
-      context 'when specified match does not specified' do
-        let(:match_id) { nil }
+      context 'when specified match does not exist' do
+        let(:match_id) { 'invalid' }
 
         it { is_expected_response.to have_http_status(404) }
       end
 
-      context 'when specified member does not specified' do
+      context 'when member does not specified' do
         let(:member_id) { nil }
 
         it { is_expected_response.to have_http_status(404) }
