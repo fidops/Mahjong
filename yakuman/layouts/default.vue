@@ -15,7 +15,9 @@
 
         <v-app-bar app dense elevation="3">
             <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-            <v-toolbar-title>Yakuman</v-toolbar-title>
+            <NuxtLink to="/" :style="{ textDecoration: 'none', color: 'inherit' }">
+                <v-toolbar-title>Yakuman</v-toolbar-title>
+            </NuxtLink>
         </v-app-bar>
         <v-main>
             <Nuxt />

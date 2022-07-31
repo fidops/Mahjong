@@ -1,5 +1,5 @@
 export interface Match {
-    id: number
+    id: string
     name: string
     created_at: Date
     jansou_id: string

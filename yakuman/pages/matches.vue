@@ -5,6 +5,10 @@
         <v-breadcrumbs :items="items" large></v-breadcrumbs>
         <v-spacer></v-spacer>
 
+        <v-alert outlined shaped type="info">
+            各行をクリックすると詳細を確認できます。
+        </v-alert>
+
         <v-data-table
             item-key="id"
             :headers="headers"

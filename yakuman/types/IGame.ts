@@ -1,5 +1,5 @@
 export interface Game {
-    id: number
+    id: string
     east_id: string
     south_id: string
     west_id: string
