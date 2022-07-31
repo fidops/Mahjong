@@ -22,10 +22,6 @@ import { Member } from '~/types/IMember'
 export default Vue.extend({
     name: 'FidopMember',
     data: () => ({
-        routes: [
-            { path: '/', breadcrumbName: 'Home' },
-            { path: '/members', breadcrumbName: 'members' },
-        ],
         items: [
             { text: 'Top', disabled: false, href: '/' },
             { text: '雀士一覧', disabled: true, href: '/members' },

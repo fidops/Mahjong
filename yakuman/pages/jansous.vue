@@ -1,10 +1,18 @@
 <template>
-    <main>
-        <a-page-header title="雀荘一覧" :breadcrumb="{ props: { routes } }" />
-        <a-spin size="large" tip="loading..." :spinning="loading">
-            <a-table :data-source="jansous" :columns="columns"></a-table>
-        </a-spin>
-    </main>
+    <v-container>
+        <h1>雀荘一覧</h1>
+        <v-spacer></v-spacer>
+        <v-breadcrumbs :items="items" large></v-breadcrumbs>
+        <v-spacer></v-spacer>
+        <v-data-table
+            item-key="id"
+            :headers="headers"
+            :items="jansous"
+            :items-per-page="10"
+            :loading="loading"
+            loading-text="よみこみちゅう..."
+        ></v-data-table>
+    </v-container>
 </template>
 
 <script lang="ts">
@@ -14,27 +22,15 @@ import { Jansou } from '~/types/IJansou'
 export default Vue.extend({
     name: 'MahjongMatch',
     data: () => ({
-        routes: [
-            { path: '/', breadcrumbName: 'Home' },
-            { path: '/jansous', breadcrumbName: 'jansous' },
+        items: [
+            { text: 'Top', disabled: false, href: '/' },
+            { text: '雀荘一覧', disabled: true, href: '/jansous' },
         ],
         jansous: [] as Jansou[],
-        columns: [
-            {
-                title: 'Name',
-                dataIndex: 'name',
-                key: 'name',
-            },
-            {
-                title: 'GoogleMap',
-                dataIndex: 'google_map_url',
-                key: 'google_map_url',
-            },
-            {
-                title: 'Address',
-                dataIndex: 'address',
-                key: 'address',
-            },
+        headers: [
+            { text: '名前', value: 'name' },
+            { text: '住所', value: 'address' },
+            { text: 'GoogleMap', value: 'google_map_url' },
         ],
         loading: true,
     }),
