@@ -1,51 +1,39 @@
 <template>
-    <main>
+    <v-container>
         <h1>Login</h1>
-        <a-form-model
-            layout="inline"
-            :model="auth"
-            @submit.prevent="handleLogin"
-        >
-            <a-form-model-item>
-                <a-input v-model="auth.userid" placeholder="Userid">
-                    <a-icon
-                        slot="prefix"
-                        type="user"
-                        style="color: rgb(0 0 0 / 25%)"
-                    />
-                </a-input>
-            </a-form-model-item>
-
-            <a-form-model-item>
-                <a-input
-                    v-model="auth.password"
-                    type="password"
-                    placeholder="Password"
-                >
-                    <a-icon
-                        slot="prefix"
-                        type="lock"
-                        style="color: rgb(0 0 0 / 25%)"
-                    />
-                </a-input>
-            </a-form-model-item>
-
-            <a-form-model-item>
-                <a-button
-                    type="primary"
-                    html-type="submit"
-                    :disabled="auth.userid == '' || auth.password == ''"
-                >
-                    Log in
-                </a-button>
-            </a-form-model-item>
-        </a-form-model>
-    </main>
+        <v-alert
+            color="red"
+            dense
+            outlined
+            type="error"
+            v-if="!!error"
+        >{{ error }}</v-alert>
+        <v-form ref="form" @submit.prevent="handleLogin">
+            <v-text-field
+                v-model="auth.userid"
+                :rules="[rules.required]"
+                type="text"
+                prepend-icon="mdi-account"
+                label="User ID"
+                required
+            ></v-text-field>
+            <v-text-field
+                v-model="auth.password"
+                :rules="[rules.required]"
+                type="password"
+                prepend-icon="mdi-shield-key"
+                label="Password"
+                required
+            ></v-text-field>
+            <v-btn type="submit" color="success" class="mr-4">
+                Submit
+            </v-btn>
+        </v-form>
+    </v-container>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { notification } from 'ant-design-vue'
 import { HTTPResponse } from '@nuxtjs/auth-next'
 
 export default Vue.extend({
@@ -56,9 +44,17 @@ export default Vue.extend({
             userid: '',
             password: '',
         },
+        rules: {
+            required: (value: string) => !!value || '必須です。',
+        },
+        error: '',
     }),
     methods: {
         async handleLogin() {
+            if (!this.$refs.form.validate()) {
+                return
+            }
+
             let response: HTTPResponse
             try {
                 response = (await this.$auth.loginWith('local', {
@@ -66,24 +62,15 @@ export default Vue.extend({
                 })) as HTTPResponse
             } catch (err: any) {
                 if (err.response.status === 404) {
-                    notification.error({
-                        message: 'Login failed',
-                        description: 'userid もしくは password が違います。',
-                    })
+                    this.error = 'userid もしくは password が違います。'
                 } else {
-                    notification.error({
-                        message: 'Unhandled error',
-                        description: `ステータスコード${err.response.status}が返されました。詳細はコンソールを確認してください。`,
-                    })
+                    this.error = `ステータスコード${err.response.status}が返されました。詳細はコンソールを確認してください。`
                 }
                 return
             }
+
             // this.$auth.loggedIn を正しく機能させるため、ユーザのIDをここで割り当てる。
             this.$auth.setUser({ id: response.data.id })
-            notification.success({
-                message: 'Login success',
-                description: 'Yakuman へようこそ。',
-            })
 
             // ログイン後リダイレクトが auth-next の上で正しく動作しないので $router.push を用いる。
             // FIX ME
