@@ -1,6 +1,7 @@
 <template>
     <v-container>
         <h1>Yakuman Top</h1>
+        <v-spacer></v-spacer>
         <v-breadcrumbs :items="items" large></v-breadcrumbs>
         <v-spacer></v-spacer>
         <div>
