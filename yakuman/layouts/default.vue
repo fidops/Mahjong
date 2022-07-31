@@ -1,87 +1,50 @@
 <template>
-    <a-layout>
-        <a-layout-sider
-            theme="dark"
-            breakpoint="lg"
-            collapsed-width="0"
-            @breakpoint="onBreakpoint"
-        >
-            <a-menu theme="dark" mode="inline">
-                <a-menu-item key="1">
-                    <NuxtLink to="/members">
-                        <a-icon type="user" />
-                        <span>雀士一覧</span>
-                    </NuxtLink>
-                </a-menu-item>
-                <a-menu-item key="2">
-                    <NuxtLink to="/jansous">
-                        <a-icon type="bank" />
-                        <span>雀荘一覧</span>
-                    </NuxtLink>
-                </a-menu-item>
-                <a-menu-item key="3">
-                    <NuxtLink to="/matches">
-                        <a-icon type="video-camera" />
-                        <span>戦一覧</span>
-                    </NuxtLink>
-                </a-menu-item>
-                <a-menu-item key="4">
-                    <NuxtLink to="/games">
-                        <a-icon type="line-chart" />
-                        <span>戦績一覧</span>
-                    </NuxtLink>
-                </a-menu-item>
-            </a-menu>
-        </a-layout-sider>
-        <a-layout :style="styles.layout">
-            <a-layout-content :style="styles.layoutContent">
+    <v-app>
+        <v-navigation-drawer app v-model="drawer">
+            <v-list nav dense>
+                <NuxtLink :to="link.path" v-for="link in links" :key="link.path" class="aside-link">
+                    <v-list-item>
+                        <v-list-item-icon>
+                            <v-icon>{{ link.icon }}</v-icon>
+                        </v-list-item-icon>
+                            <v-list-item-title>{{ link.text }}</v-list-item-title>
+                    </v-list-item>
+                </NuxtLink>
+            </v-list>
+        </v-navigation-drawer>
+
+        <v-app-bar app dense elevation="3">
+            <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-toolbar-title>Title</v-toolbar-title>
+        </v-app-bar>
+        <v-main>
+            <v-container>
                 <Nuxt />
-            </a-layout-content>
-        </a-layout>
-    </a-layout>
+            </v-container>
+        </v-main>
+    </v-app>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
-const defaultStyles = {
-    layout: {
-        height: '100vh',
-    },
-    layoutContent: {
-        overflow: 'auto',
-        margin: '3em 2em',
-        padding: '2em',
-        background: '#fefefe',
-    },
-}
-
 export default Vue.extend({
     name: 'DefaultLayout',
     data: () => ({
-        styles: {
-            ...defaultStyles,
-        },
+        drawer: false,
+        links: [
+            { path: '/members', text: '雀士一覧', icon: 'mdi-home' },
+            { path: '/jansous', text: '雀荘一覧', icon: 'mdi-home' },
+            { path: '/matches', text: '戦一覧', icon: 'mdi-home' },
+            { path: '/games', text: '戦績一覧', icon: 'mdi-home' },
+        ]
     }),
-    methods: {
-        onBreakpoint(isBroken: boolean) {
-            if (isBroken) {
-                this.styles.layoutContent = Object.assign(
-                    {},
-                    this.styles.layoutContent,
-                    {
-                        margin: '1em .5em',
-                        padding: '1em',
-                    }
-                )
-            } else {
-                this.styles.layoutContent = Object.assign(
-                    {},
-                    this.styles.layoutContent,
-                    defaultStyles.layoutContent
-                )
-            }
-        },
-    },
 })
 </script>
+
+<style scoped>
+.aside-link, .aside-link:visited {
+    text-decoration: none;
+    color: inherit;
+}
+</style>
