@@ -1,38 +1,20 @@
 <template>
-    <main>
-        <a-page-header title="戦績一覧" :breadcrumb="{ props: { routes } }" />
-        <a-spin size="large" tip="loading..." :spinning="loading">
-            <a-table
-                :data-source="tableFormattedGames"
-                :columns="columns"
-                :pagination="paginationOptions"
-            >
-                <span slot="scoreSlot" slot-scope="score, record">
-                    <span v-if="!loading && score == null">-</span>
-                    <a-badge
-                        v-else-if="!record.sanma && score >= 30000"
-                        status="success"
-                        :text="String(score)"
-                    />
-                    <a-badge
-                        v-else-if="!record.sanma && score < 30000"
-                        status="error"
-                        :text="String(score)"
-                    />
-                    <a-badge
-                        v-else-if="record.sanma && score >= 40000"
-                        status="success"
-                        :text="String(score)"
-                    />
-                    <a-badge
-                        v-else-if="record.sanma && score < 40000"
-                        status="error"
-                        :text="String(score)"
-                    />
-                </span>
-            </a-table>
-        </a-spin>
-    </main>
+    <v-container>
+        <h1>戦績一覧</h1>
+        <v-spacer></v-spacer>
+        <v-breadcrumbs :items="items" large></v-breadcrumbs>
+        <v-spacer></v-spacer>
+
+        <v-data-table
+            item-key="id"
+            :headers="headers"
+            :items="tableFormattedGames"
+            :items-per-page="20"
+            :loading="loading"
+            loading-text="よみこみちゅう..."
+        >
+        </v-data-table>
+    </v-container>
 </template>
 
 <script lang="ts">
@@ -40,11 +22,9 @@ import Vue from 'vue'
 import { Game } from '~/types/IGame'
 import { Member } from '~/types/IMember'
 
-interface ColumnObject {
-    title: string
-    dataIndex: string
-    key: string
-    scopedSlots?: { customRender: string }
+interface TableHeader {
+    text: string
+    value: string
 }
 
 interface UuidWithScore {
@@ -59,14 +39,14 @@ type TableFormattedGame = UuidWithScore & {
 export default Vue.extend({
     name: 'MahjongGame',
     data: () => ({
-        routes: [
-            { path: '/', breadcrumbName: 'Home' },
-            { path: '/games', breadcrumbName: 'games' },
+        items: [
+            { text: 'Top', disabled: false, href: '/' },
+            { text: '戦績一覧', disabled: true, href: '/games' },
         ],
         games: [] as Game[],
         members: [] as Member[],
         tableFormattedGames: [] as UuidWithScore[],
-        columns: [] as ColumnObject[],
+        headers: [] as TableHeader[],
         paginationOptions: {
             pageSize: 20,
         },
@@ -81,7 +61,7 @@ export default Vue.extend({
         }
 
         this.assignTableFormattedGames()
-        this.assignColumns()
+        this.assignHeaders()
         this.loading = false
     },
     methods: {
@@ -116,22 +96,15 @@ export default Vue.extend({
             })
             this.tableFormattedGames = tableFormattedGames
         },
-        assignColumns() {
-            const columns = [] as ColumnObject[]
-            columns.push({
-                title: 'ID',
-                dataIndex: 'id',
-                key: 'id',
-            })
+        assignHeaders() {
+            const headers = [] as TableHeader[]
             this.members.forEach((member) => {
-                columns.push({
-                    title: member.name,
-                    dataIndex: member.id,
-                    key: member.id,
-                    scopedSlots: { customRender: 'scoreSlot' },
+                headers.push({
+                    text: member.name,
+                    value: member.id,
                 })
             })
-            this.columns = columns
+            this.headers = headers
         },
     },
 })
