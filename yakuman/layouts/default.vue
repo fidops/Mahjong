@@ -15,7 +15,7 @@
 
         <v-app-bar app dense elevation="3">
             <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-            <v-toolbar-title>Title</v-toolbar-title>
+            <v-toolbar-title>Yakuman</v-toolbar-title>
         </v-app-bar>
         <v-main>
             <Nuxt />
@@ -29,12 +29,12 @@ import Vue from 'vue'
 export default Vue.extend({
     name: 'DefaultLayout',
     data: () => ({
-        drawer: false,
+        drawer: true,
         links: [
-            { path: '/members', text: '雀士一覧', icon: 'mdi-home' },
-            { path: '/jansous', text: '雀荘一覧', icon: 'mdi-home' },
-            { path: '/matches', text: '戦一覧', icon: 'mdi-home' },
-            { path: '/games', text: '戦績一覧', icon: 'mdi-home' },
+            { path: '/members', text: '雀士一覧', icon: 'mdi-account-group' },
+            { path: '/jansous', text: '雀荘一覧', icon: 'mdi-home-group' },
+            { path: '/matches', text: '戦一覧', icon: 'mdi-axe-battle' },
+            { path: '/games', text: '戦績一覧', icon: 'mdi-list-box' },
         ]
     }),
 })
