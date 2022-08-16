@@ -17,11 +17,12 @@ services:
       retries: 5
 
   houou:
-    build: ./houou
-    image: fidops/houou:dev
+    image: ruby:3.1.2
     volumes:
       - ./houou:/app
       - bundle_gems:/usr/local/bundle
+    command: bundle exec rails server -p 3000 -b 0.0.0.0
+    working_dir: /app
     environment:
       DATABASE_URL: ${DATABASE_URL}
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: true
@@ -33,11 +34,12 @@ services:
     tty: true
 
   yakuman:
-    build: ./yakuman
-    image: fidops/yakuman:dev
+    image: node:16
     volumes:
       - ./yakuman:/app
       - node_modules:/app/node_modules
+    command: yarn dev
+    working_dir: /app
     environment:
       API_URL: ${API_URL}
     ports:
