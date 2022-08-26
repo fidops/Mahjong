@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_03_015225) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_17_135652) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -20,7 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_015225) do
     t.string "auth_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "administrator_id"
+    t.uuid "administrator_id", null: false
     t.index ["administrator_id"], name: "index_access_tokens_on_administrator_id"
     t.index ["auth_token"], name: "index_access_tokens_on_auth_token", unique: true
     t.index ["token"], name: "index_access_tokens_on_token", unique: true
@@ -61,6 +61,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_015225) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "match_members", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "match_id", null: false
+    t.uuid "member_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_match_members_on_match_id"
+    t.index ["member_id"], name: "index_match_members_on_member_id"
+  end
+
   create_table "matches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -76,10 +85,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_015225) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "access_tokens", "administrators"
   add_foreign_key "games", "matches"
   add_foreign_key "games", "members", column: "east_id"
   add_foreign_key "games", "members", column: "north_id"
   add_foreign_key "games", "members", column: "south_id"
   add_foreign_key "games", "members", column: "west_id"
+  add_foreign_key "match_members", "matches"
+  add_foreign_key "match_members", "members"
   add_foreign_key "matches", "jansous"
 end

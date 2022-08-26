@@ -1,5 +1,5 @@
-export interface MahjongGame {
-    id: number
+export interface Game {
+    id: string
     east_id: string
     south_id: string
     west_id: string
@@ -8,5 +8,5 @@ export interface MahjongGame {
     south_score: number
     west_score: number
     north_score: number | null
-    mahjong_match_id: number
+    match_id: number
 }

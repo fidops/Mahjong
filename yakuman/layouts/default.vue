@@ -1,87 +1,50 @@
 <template>
-    <a-layout>
-        <a-layout-sider
-            theme="dark"
-            breakpoint="lg"
-            collapsed-width="0"
-            @breakpoint="onBreakpoint"
-        >
-            <a-menu theme="dark" mode="inline">
-                <a-menu-item key="1">
-                    <NuxtLink to="/members">
-                        <a-icon type="user" />
-                        <span>雀士一覧</span>
-                    </NuxtLink>
-                </a-menu-item>
-                <a-menu-item key="2">
-                    <NuxtLink to="/mahjong/jansous">
-                        <a-icon type="upload" />
-                        <span>雀荘一覧</span>
-                    </NuxtLink>
-                </a-menu-item>
-                <a-menu-item key="3">
-                    <NuxtLink to="/mahjong/matches">
-                        <a-icon type="video-camera" />
-                        <span>戦一覧</span>
-                    </NuxtLink>
-                </a-menu-item>
-                <a-menu-item key="4">
-                    <NuxtLink to="/mahjong/games">
-                        <a-icon type="upload" />
-                        <span>戦績一覧</span>
-                    </NuxtLink>
-                </a-menu-item>
-            </a-menu>
-        </a-layout-sider>
-        <a-layout :style="styles.layout">
-            <a-layout-content :style="styles.layoutContent">
-                <Nuxt />
-            </a-layout-content>
-        </a-layout>
-    </a-layout>
+    <v-app>
+        <v-navigation-drawer app v-model="drawer">
+            <v-list nav dense>
+                <NuxtLink :to="link.path" v-for="link in links" :key="link.path" class="aside-link">
+                    <v-list-item>
+                        <v-list-item-icon>
+                            <v-icon>{{ link.icon }}</v-icon>
+                        </v-list-item-icon>
+                            <v-list-item-title>{{ link.text }}</v-list-item-title>
+                    </v-list-item>
+                </NuxtLink>
+            </v-list>
+        </v-navigation-drawer>
+
+        <v-app-bar app dense elevation="3">
+            <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+            <NuxtLink to="/" :style="{ textDecoration: 'none', color: 'inherit' }">
+                <v-toolbar-title>Yakuman</v-toolbar-title>
+            </NuxtLink>
+        </v-app-bar>
+        <v-main>
+            <Nuxt />
+        </v-main>
+    </v-app>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
-const defaultStyles = {
-    layout: {
-        height: '100vh',
-    },
-    layoutContent: {
-        overflow: 'auto',
-        margin: '3em 2em',
-        padding: '2em',
-        background: '#fefefe',
-    },
-}
-
 export default Vue.extend({
     name: 'DefaultLayout',
     data: () => ({
-        styles: {
-            ...defaultStyles,
-        },
+        drawer: true,
+        links: [
+            { path: '/members', text: '雀士一覧', icon: 'mdi-account-group' },
+            { path: '/jansous', text: '雀荘一覧', icon: 'mdi-home-group' },
+            { path: '/matches', text: '戦一覧', icon: 'mdi-axe-battle' },
+            { path: '/games', text: '戦績一覧', icon: 'mdi-list-box' },
+        ]
     }),
-    methods: {
-        onBreakpoint(isBroken: boolean) {
-            if (isBroken) {
-                this.styles.layoutContent = Object.assign(
-                    {},
-                    this.styles.layoutContent,
-                    {
-                        margin: '1em .5em',
-                        padding: '1em',
-                    }
-                )
-            } else {
-                this.styles.layoutContent = Object.assign(
-                    {},
-                    this.styles.layoutContent,
-                    defaultStyles.layoutContent
-                )
-            }
-        },
-    },
 })
 </script>
+
+<style scoped>
+.aside-link, .aside-link:visited {
+    text-decoration: none;
+    color: inherit;
+}
+</style>

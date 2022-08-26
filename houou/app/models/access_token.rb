@@ -7,7 +7,7 @@
 #  token            :string
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  administrator_id :bigint
+#  administrator_id :uuid             not null
 #
 # Indexes
 #
@@ -15,9 +15,15 @@
 #  index_access_tokens_on_auth_token        (auth_token) UNIQUE
 #  index_access_tokens_on_token             (token) UNIQUE
 #
+# Foreign Keys
+#
+#  fk_rails_...  (administrator_id => administrators.id)
+#
 require 'jwt'
 
 class AccessToken < ApplicationRecord
+  self.implicit_order_column = 'created_at'
+
   has_secure_token :token, length: 64
   has_secure_token :auth_token, length: 64
 

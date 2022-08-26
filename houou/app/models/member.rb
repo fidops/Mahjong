@@ -11,6 +11,9 @@
 class Member < ApplicationRecord
   self.implicit_order_column = 'created_at'
 
+  has_many :match_members, dependent: :destroy
+  has_many :matches, through: :match_members
+
   validates :name, presence: true
   # validates :discord_id, numericality: { only_integer: true }, allow_nil: true
 end

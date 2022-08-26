@@ -32,6 +32,8 @@
 #  fk_rails_...  (west_id => members.id)
 #
 class Game < ApplicationRecord
+  self.implicit_order_column = 'created_at'
+
   belongs_to :east,  nil, class_name: 'Member'
   belongs_to :south, nil, class_name: 'Member'
   belongs_to :west,  nil, class_name: 'Member'

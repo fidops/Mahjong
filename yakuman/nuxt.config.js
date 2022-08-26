@@ -15,11 +15,11 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['ant-design-vue/dist/antd.css'],
+  css: ['vuetify/dist/vuetify.min.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/antd-ui',
+    '@/plugins/vuetify.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -31,6 +31,7 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
+    '@nuxtjs/vuetify',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

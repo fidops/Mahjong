@@ -12,6 +12,11 @@ contexts:
       bin: docker
       args: ["compose", "run", "--rm", "houou"]
 
+  houou-test:
+    executable:
+      bin: docker
+      args: ["compose", "run", "-e", "RAILS_ENV=test", "--rm", "houou"]
+
   yakuman:
     executable:
       bin: docker
@@ -22,7 +27,6 @@ contexts:
       bin: docker
       args: ["compose", "run", "--rm", "houou"]
     up: docker compose up -d postgres
-    down: docker compose down postgres
 
 tasks:
   add-remote-houou:
@@ -56,6 +60,17 @@ tasks:
     context: houou-with-postgres
     command: bundle exec rails db:reset
 
+  dbmigrate:
+    description: "Run rails db:migrate"
+    context: houou-with-postgres
+    command: bundle exec rails db:migrate
+
+  rspec:
+    description: "Run RSpec"
+    context: houou-test
+    before: bundle exec rails db:prepare
+    command: bundle exec rspec
+
   push-to-houou:
     description: "Push to fidops/houou"
     command: git subtree push --prefix=houou houou {{index .ArgsList 0}}
@@ -67,5 +82,5 @@ tasks:
   pull:
     description: "Pull subtree updates"
     command:
-      - git subtree pull --prefix=houou --squash houou main
-      - git subtree pull --prefix=yakuman --squash yakuman main
+      - git subtree pull --prefix=houou houou main
+      - git subtree pull --prefix=yakuman yakuman main
