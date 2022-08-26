@@ -68,7 +68,7 @@ tasks:
   rspec:
     description: "Run RSpec"
     context: houou-test
-    before: bundle exec rails db:setup
+    before: bundle exec rails db:prepare
     command: bundle exec rspec
 
   push-to-houou:
@@ -82,5 +82,5 @@ tasks:
   pull:
     description: "Pull subtree updates"
     command:
-      - git subtree pull --prefix=houou --squash houou main
-      - git subtree pull --prefix=yakuman --squash yakuman main
+      - git subtree pull --prefix=houou houou main
+      - git subtree pull --prefix=yakuman yakuman main
